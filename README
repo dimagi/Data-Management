@@ -1,0 +1,2 @@
+This is the Dimagi repository dedicated to scripts and other useful files related to making Data Management and uptime monitoring easier.  Usually one will find bash scripts, specific upstart/supervisor/xinetd scripts and other similar files here that make the life of the average Dimagi'er a little easier.
+
