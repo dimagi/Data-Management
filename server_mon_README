@@ -1,0 +1,16 @@
+server_mon.sh is a script that should be hooked into your crontab file.  The script get's run periodically and runs a grep
+on the output of 'supervisorctl status'.  If it looks like the service is up and running, a pid file is 'touch'ed in a specific
+location.
+
+Point pingdom to the globally hosted pid file.  If the pid file disappears (which it will if the script decides the service is not
+running), Pingdom will cry bloody murder and you'll be the first to know.
+
+Tips:
+cp this script to the folder of your choice and edit it to your liking (modify the service string to look for, PID location, etc)
+then do a symlink to /usr/bin such that it is easily available to everyone.
+Then 
+sudo crontab -e
+ To run the script every minute use
+* * * * * /usr/bin/my_server_mon_instance > /dev/null
+in your crontab file
+
