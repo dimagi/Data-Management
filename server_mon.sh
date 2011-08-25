@@ -4,13 +4,11 @@
 SUPERV_NUM_PROCS=$#
 #want to create an additional log?
 LOG_ENABLED=true
-LOG_FILE_LOCATION=/home/adewinter/pingdom_server_mon_log.log
-#LOG_FILE_LOCATION=/home/aremind/www/production/log/pingdom_log.log
+LOG_FILE_LOCATION=/home/aremind/www/production/log/pingdom_log.log
 #folder where you'd like to host the pid file for this process monitor
-PINGDOM_FILE_LOC=/home/adewinter/
-#PINGDOM_FILE_LOC=/home/aremind/www/production/code_root/static_files/pingdom
+PINGDOM_FILE_LOC=/home/aremind/www/production/code_root/static_files/pingdom
 #file name of the PID file. Can be anything
-PINGDOM_FILE_NAME=aremind_celerybeat.pid
+PINGDOM_FILE_NAME=aremind_server_procs.pid
 DEBUG=True
 
 PROC_STATUS=OK
