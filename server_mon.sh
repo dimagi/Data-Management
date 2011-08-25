@@ -27,12 +27,20 @@ then
 	echo DEBUG IS ENABLED.
 fi
 
+if [ ! -d "$PINGDOM_FILE_LOC" ]; then
+	if [ $DEBUG ]; then
+		echo "Directory for storing pingdom pid not found! Creating..."
+	fi
+	mkdir "$PINGDOM_FILE_LOC"
+fi
+touch "$PINGDOM_FILE_LOC"/"$PINGDOM_FILE_NAME"
+
 
 for var in $@
 do
 	#the meat of the script.
-	PROC_STATUS_TEXT=`/usr/bin/supervisorctl status | grep $var`
-	PROC_RUNNING=`/usr/bin/supervisorctl status | grep $var | grep RUNNING`
+	PROC_STATUS_TEXT=`supervisorctl status | grep $var`
+	PROC_RUNNING=`supervisorctl status | grep $var | grep RUNNING`
 	if [ -z "$PROC_RUNNING" ]
 	then
 		IS_RUNNING="False"

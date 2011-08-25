@@ -1,2 +1,1 @@
-./server_mon.sh aremind-production:aremind-production-celerybeat "aremind-production:aremind-production-celeryd"
-
+sh /usr/bin/server_mon aremind-production:aremind-production-celerybeat aremind-production:aremind-production-celeryd aremind-production:aremind-production-server
