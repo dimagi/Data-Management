@@ -1,16 +1,29 @@
-server_mon.sh is a script that should be hooked into your crontab file.  The script get's run periodically and runs a grep
-on the output of 'supervisorctl status'.  If it looks like the service is up and running, a pid file is 'touch'ed in a specific
-location.
+server_mon_wrapper.sh and server_mon.sh are scripts that check if certain supervisord processes are running.
+server_mon_wrapper calls server_mon with command line arguments indicating the processes that need to be checked.  Wrapper
+should be called periodically by crontab.  server_mon.sh looks at all the supervisord process passed to it as arguments
+and checks their running status.  It then generates an xml file (compatible with pingdom.com) that indicates the number
+of services that have been checked (we're using the response time field for that) and whether they are /all/ up.
+If any one service is down, the entire xml file status is marked as 'FAIL' and pingdom will alert you.
+
+Usage:
+checkout the dimagi/Data-Management repo.
+
+Copy server_mon.sh and server_mon_wrapper.sh to somewhere you like (and symlink it to somewhere that's globally executable: e.g. /usr/bin)
+
+Edit server_mon_wrapper with the SUPERVISORD names of the processes you'd like to monitor (run sudo supervisortctl status for a list
+of available procs and their full names).
+
+Edit server_mon.sh,  make sure to note/alter the location that the pingdom pid file will be placed.  This path+filename
+should be accessible through the web so that pingdom can download it.
+
+Edit your crontab file (see below).
 
 Point pingdom to the globally hosted pid file.  If the pid file disappears (which it will if the script decides the service is not
 running), Pingdom will cry bloody murder and you'll be the first to know.
 
 Tips:
-cp this script to the folder of your choice and edit it to your liking (modify the service string to look for, PID location, etc)
-then do a symlink to /usr/bin such that it is easily available to everyone.
-Then 
 sudo crontab -e
  To run the script every minute use
-* * * * * /usr/bin/my_server_mon_instance > /dev/null
+* * * * * /usr/bin/my_server_mon_wrapper > /dev/null
 in your crontab file
 
